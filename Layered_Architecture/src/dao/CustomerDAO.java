@@ -1,6 +1,5 @@
-package controller.dao;
+package dao;
 
-import db.DBConnection;
 import model.CustomerDTO;
 
 import java.sql.*;

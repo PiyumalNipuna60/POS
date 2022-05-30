@@ -1,6 +1,5 @@
-package controller.dao;
+package dao;
 
-import controller.ManageCustomersFormController;
 import db.DBConnection;
 import model.CustomerDTO;
 

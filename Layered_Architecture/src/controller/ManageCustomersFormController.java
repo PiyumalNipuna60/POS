@@ -2,8 +2,8 @@ package controller;
 
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXTextField;
-import controller.dao.CustomerDOAImpl;
-import db.DBConnection;
+import dao.CustomerDAO;
+import dao.CustomerDOAImpl;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -21,9 +21,6 @@ import view.tdm.CustomerTM;
 
 import java.io.IOException;
 import java.net.URL;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -75,7 +72,7 @@ public class ManageCustomersFormController {
         tblCustomers.getItems().clear();
         /*Get all customers*/
         try {
-            CustomerDOAImpl customerDOA = new CustomerDOAImpl();
+            CustomerDAO customerDOA = new CustomerDOAImpl();
             ArrayList<CustomerDTO> allCustomer = customerDOA.getAllCustomer();
             for (CustomerDTO customer : allCustomer) {
                 tblCustomers.getItems().add(new CustomerTM(customer.getId(), customer.getName(), customer.getAddress()));
@@ -148,7 +145,7 @@ public class ManageCustomersFormController {
                 if (existCustomer(id)) {
                     new Alert(Alert.AlertType.ERROR, id + " already exists").show();
                 }
-                CustomerDOAImpl customerDOA = new CustomerDOAImpl();
+                CustomerDAO customerDOA = new CustomerDOAImpl();
                 customerDOA.saveCustomer(new CustomerDTO(id, name, address));
                 tblCustomers.getItems().add(new CustomerTM(id, name, address));
 
@@ -166,7 +163,7 @@ public class ManageCustomersFormController {
                     new Alert(Alert.AlertType.ERROR, "There is no such customer associated with the id " + id).show();
                 }
 
-                CustomerDOAImpl customerDOA=new CustomerDOAImpl();
+                CustomerDAO customerDOA=new CustomerDOAImpl();
                 customerDOA.updateCustomer(new CustomerDTO(id,name,address));
             } catch (SQLException e) {
                 new Alert(Alert.AlertType.ERROR, "Failed to update the customer " + id + e.getMessage()).show();
@@ -197,7 +194,7 @@ public class ManageCustomersFormController {
             if (!existCustomer(id)) {
                 new Alert(Alert.AlertType.ERROR, "There is no such customer associated with the id " + id).show();
             }
-            CustomerDOAImpl customerDOA=new CustomerDOAImpl();
+            CustomerDAO customerDOA=new CustomerDOAImpl();
             customerDOA.deleteCustomer(id);
 
             tblCustomers.getItems().remove(tblCustomers.getSelectionModel().getSelectedItem());
@@ -213,7 +210,7 @@ public class ManageCustomersFormController {
 
     private String generateNewId() {
         try {
-            CustomerDOAImpl customerDOA=new CustomerDOAImpl();
+            CustomerDAO customerDOA=new CustomerDOAImpl();
             return customerDOA.generateNewId();
         } catch (SQLException e) {
             new Alert(Alert.AlertType.ERROR, "Failed to generate a new id " + e.getMessage()).show();
