@@ -72,6 +72,7 @@ public class ManageItemsFormController {
         tblItems.getItems().clear();
         try {
             /*Get all items*/
+            //comment
             Connection connection = DBConnection.getDbConnection().getConnection();
             Statement stm = connection.createStatement();
             ResultSet rst = stm.executeQuery("SELECT * FROM Item");
