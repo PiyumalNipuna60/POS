@@ -32,7 +32,6 @@ import java.util.List;
  **/
 
 public class ManageCustomersFormController {
-    private final CrudDAO<CustomerDTO, String> customerDOA = new CustomerDAOImpl();
     public AnchorPane root;
     public JFXTextField txtCustomerName;
     public JFXTextField txtCustomerId;
@@ -41,6 +40,8 @@ public class ManageCustomersFormController {
     public JFXTextField txtCustomerAddress;
     public TableView<CustomerTM> tblCustomers;
     public JFXButton btnAddNewCustomer;
+
+    private final CrudDAO<CustomerDTO, String> customerDOA = new CustomerDAOImpl();
 
     public void initialize() {
         tblCustomers.getColumns().get(0).setCellValueFactory(new PropertyValueFactory<>("id"));

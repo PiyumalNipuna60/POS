@@ -41,7 +41,7 @@ public class ManageItemsFormController {
     public JFXTextField txtUnitPrice;
     public JFXButton btnAddNewItem;
 
-    public CrudDAO<ItemDTO, String> itemDOA = new ItemDAOImpl();
+    public final CrudDAO<ItemDTO, String> itemDOA = new ItemDAOImpl();
 
     public void initialize() {
         tblItems.getColumns().get(0).setCellValueFactory(new PropertyValueFactory<>("code"));
