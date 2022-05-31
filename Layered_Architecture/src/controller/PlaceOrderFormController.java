@@ -3,11 +3,9 @@ package controller;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXComboBox;
 import com.jfoenix.controls.JFXTextField;
-import dao.*;
-import dao.custom.impl.CustomerDAOImpl;
-import dao.custom.impl.ItemDAOImpl;
-import dao.custom.impl.OrderDAOImpl;
-import dao.custom.impl.OrderDetailsDAOImpl;
+import dao.CrudDAO;
+import dao.custom.*;
+import dao.custom.impl.*;
 import db.DBConnection;
 import javafx.application.Platform;
 import javafx.beans.property.ReadOnlyObjectWrapper;
@@ -30,7 +28,8 @@ import view.tdm.OrderDetailTM;
 import java.io.IOException;
 import java.math.BigDecimal;
 import java.net.URL;
-import java.sql.*;
+import java.sql.Connection;
+import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -44,6 +43,12 @@ import java.util.stream.Collectors;
 
 public class PlaceOrderFormController {
 
+    private final CustomerDAO customerDAO = new CustomerDAOImpl();
+    private final ItemDAO itemDAO = new ItemDAOImpl();
+    private final OrderDAO orderDAO = new OrderDAOImpl();
+    private final OrderDAO orderDAO1 = new OrderDAOImpl();
+    private final OrderDetailsDAO orderDetailsDAO = new OrderDetailsDAOImpl();
+    private final QueryDAO queryDAO = new QueryDAOImpl();
     public AnchorPane root;
     public JFXButton btnPlaceOrder;
     public JFXTextField txtCustomerName;
@@ -59,13 +64,6 @@ public class PlaceOrderFormController {
     public Label lblDate;
     public Label lblTotal;
     private String orderId;
-
-    CrudDAO<CustomerDTO, String> customerDAO = new CustomerDAOImpl();
-    CrudDAO<ItemDTO, String> itemDAO = new ItemDAOImpl();
-    CrudDAO<OrderDTO,String> orderDAO = new OrderDAOImpl();
-    CrudDAO<OrderDTO,String> orderDAO1 = new OrderDAOImpl();
-    CrudDAO<OrderDetailDTO,String> orderDetailsDAO = new OrderDetailsDAOImpl();
-
 
     public void initialize() throws SQLException, ClassNotFoundException {
 
@@ -308,7 +306,7 @@ public class PlaceOrderFormController {
 
     public void btnPlaceOrder_OnAction(ActionEvent actionEvent) {
         boolean b = saveOrder(orderId, LocalDate.now(), cmbCustomerId.getValue(),
-                tblOrderDetails.getItems().stream().map(tm -> new OrderDetailDTO(orderId,tm.getCode(), tm.getQty(), tm.getUnitPrice())).collect(Collectors.toList()));
+                tblOrderDetails.getItems().stream().map(tm -> new OrderDetailDTO(orderId, tm.getCode(), tm.getQty(), tm.getUnitPrice())).collect(Collectors.toList()));
 
         if (b) {
             new Alert(Alert.AlertType.INFORMATION, "Order has been placed successfully").show();
@@ -343,7 +341,7 @@ public class PlaceOrderFormController {
                 return false;
             }
 
-            CrudDAO<ItemDTO,String> itemDAO = new ItemDAOImpl();
+            CrudDAO<ItemDTO, String> itemDAO = new ItemDAOImpl();
             for (OrderDetailDTO detail : orderDetails) {
                 boolean save1 = orderDetailsDAO.save(detail);
                 if (!save1) {
