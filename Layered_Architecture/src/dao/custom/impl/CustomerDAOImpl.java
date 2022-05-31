@@ -1,11 +1,13 @@
-package dao;
+package dao.custom.impl;
 
+import dao.SQLUtil;
+import dao.custom.CustomerDAO;
 import model.CustomerDTO;
 
 import java.sql.*;
 import java.util.ArrayList;
 
-public class CustomerDAOImpl implements CustomerDAO{
+public class CustomerDAOImpl implements CustomerDAO {
 
     public ArrayList<CustomerDTO> getAll() throws SQLException, ClassNotFoundException {
         ResultSet rst = SQLUtil.executeQuery("SELECT * FROM Customer");
@@ -62,5 +64,11 @@ return new CustomerDTO(rst.getString(1),rst.getString(2),rst.getString(3));
         } else {
             return "C00-001";
         }
+    }
+
+    @Override
+    public ArrayList<CustomerDTO> getAllCustomersByAddress(String address) throws ClassNotFoundException, SQLException {
+        ////aluthen sql quary ghanna one nam itemDAO interface eka bavitha karanna one
+        return null;
     }
 }

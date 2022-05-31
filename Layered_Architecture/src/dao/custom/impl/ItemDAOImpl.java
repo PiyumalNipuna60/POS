@@ -1,6 +1,7 @@
-package dao;
+package dao.custom.impl;
 
-import model.CustomerDTO;
+import dao.SQLUtil;
+import dao.custom.ItemDAO;
 import model.ItemDTO;
 
 import java.sql.*;
@@ -57,5 +58,11 @@ public class ItemDAOImpl implements ItemDAO {
         } else {
             return "I00-001";
         }
+    }
+
+    @Override
+    public ArrayList<ItemDTO> getItemFromPrice(Double price) throws SQLException, ClassNotFoundException {
+        //aluthen sql quary ghanna one nam itemDAO interface eka bavitha karanna one
+        return null;
     }
 }
