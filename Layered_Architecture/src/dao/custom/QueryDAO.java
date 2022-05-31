@@ -1,7 +1,10 @@
 package dao.custom;
 
+import model.CustomDTO;
+
 import java.sql.SQLException;
+import java.util.ArrayList;
 
 public interface QueryDAO {
-    void searchOrderByOrderID(String id)throws SQLException,ClassNotFoundException;
+    ArrayList<CustomDTO> searchOrderByOrderID(String id)throws SQLException,ClassNotFoundException;
 }
