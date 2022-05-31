@@ -2,8 +2,8 @@ package controller;
 
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXTextField;
-import dao.ItemDAO;
-import dao.ItemDOAImpl;
+import dao.CrudDAO;
+import dao.ItemDAOImpl;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -41,7 +41,7 @@ public class ManageItemsFormController {
     public JFXTextField txtUnitPrice;
     public JFXButton btnAddNewItem;
 
-    public ItemDAO itemDOA=new ItemDOAImpl();
+    public CrudDAO<ItemDTO, String> itemDOA = new ItemDAOImpl();
 
     public void initialize() {
         tblItems.getColumns().get(0).setCellValueFactory(new PropertyValueFactory<>("code"));
@@ -78,7 +78,7 @@ public class ManageItemsFormController {
         try {
             /*Get all items*/
             // ItemDAO itemDOA = new ItemDOAImpl();
-            ArrayList<ItemDTO> allItem = itemDOA.getAllItem();
+            ArrayList<ItemDTO> allItem = itemDOA.getAll();
             for (ItemDTO item : allItem) {
                 tblItems.getItems().add(new ItemTM(item.getCode(), item.getDescription(), item.getUnitPrice(), item.getQtyOnHand()));
             }
@@ -139,7 +139,7 @@ public class ManageItemsFormController {
                 new Alert(Alert.AlertType.ERROR, "There is no such item associated with the id " + code).show();
             }
             // ItemDAO itemDOA = new ItemDOAImpl();
-            itemDOA.deleteItem(code);
+            itemDOA.delete(code);
 
             tblItems.getItems().remove(tblItems.getSelectionModel().getSelectedItem());
             tblItems.getSelectionModel().clearSelection();
@@ -181,7 +181,7 @@ public class ManageItemsFormController {
                 //Save Item
 
                 //  ItemDAO itemDOA = new ItemDOAImpl();
-                itemDOA.saveItem(new ItemDTO(code, description, unitPrice, qtyOnHand));
+                itemDOA.save(new ItemDTO(code, description, unitPrice, qtyOnHand));
                 tblItems.getItems().add(new ItemTM(code, description, unitPrice, qtyOnHand));
 
             } catch (SQLException e) {
@@ -197,7 +197,7 @@ public class ManageItemsFormController {
                 }
 
                 // ItemDAO itemDOA=new ItemDOAImpl();
-                itemDOA.updateItem(new ItemDTO(code,description,unitPrice,qtyOnHand));
+                itemDOA.update(new ItemDTO(code, description, unitPrice, qtyOnHand));
 
                 ItemTM selectedItem = tblItems.getSelectionModel().getSelectedItem();
                 selectedItem.setDescription(description);
@@ -217,14 +217,14 @@ public class ManageItemsFormController {
 
     private boolean existItem(String code) throws SQLException, ClassNotFoundException {
         // ItemDAO itemDOA=new ItemDOAImpl();
-        return itemDOA.existItem(code);
+        return itemDOA.exist(code);
     }
 
 
     private String generateNewId() {
         try {
             // ItemDAO itemDOA=new ItemDOAImpl();
-            return  itemDOA.generateNewItemId();
+            return itemDOA.generateNewId();
         } catch (SQLException e) {
             new Alert(Alert.AlertType.ERROR, e.getMessage()).show();
         } catch (ClassNotFoundException e) {
