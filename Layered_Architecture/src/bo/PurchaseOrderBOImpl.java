@@ -14,7 +14,7 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
-public class PurchaseOrderBOImpl {
+public class PurchaseOrderBOImpl implements PurchaseOderBOI{
     private final CustomerDAO customerDAO = new CustomerDAOImpl();
     private final ItemDAO itemDAO = new ItemDAOImpl();
     private final OrderDAO orderDAO = new OrderDAOImpl();
@@ -22,6 +22,7 @@ public class PurchaseOrderBOImpl {
     private final OrderDetailsDAO orderDetailsDAO = new OrderDetailsDAOImpl();
     private final QueryDAO queryDAO = new QueryDAOImpl();
 
+    @Override
     public boolean PurchaseOrder(String orderId, LocalDate orderDate, String customerId, List<OrderDetailDTO> orderDetails) throws SQLException, ClassNotFoundException {
         /*Transaction*/
         Connection connection = DBConnection.getDbConnection().getConnection();
@@ -67,34 +68,42 @@ public class PurchaseOrderBOImpl {
 //        return false;
     }
 
+    @Override
     public CustomerDTO searchCustomer(String id) throws SQLException, ClassNotFoundException {
         return customerDAO.search(id);
     }
 
+    @Override
     public ItemDTO searchItem(String code) throws SQLException, ClassNotFoundException {
         return itemDAO.search(code);
     }
 
+    @Override
     public boolean checkItemIsAvailable(String code) throws SQLException, ClassNotFoundException {
         return itemDAO.exist(code);
     }
 
+    @Override
     public boolean checkCustomerIsAvailable(String id) throws SQLException, ClassNotFoundException {
         return customerDAO.exist(id);
     }
 
+    @Override
     public String generateNewOrderId() throws SQLException, ClassNotFoundException {
         return orderDAO.generateNewId();
     }
 
+    @Override
     public ArrayList<CustomerDTO> getAllCustomer() throws SQLException, ClassNotFoundException {
         return customerDAO.getAll();
     }
 
+    @Override
     public ArrayList<ItemDTO> getAllItem() throws SQLException, ClassNotFoundException {
         return itemDAO.getAll();
     }
 
+    @Override
     public ItemDTO findItem(String code) throws SQLException, ClassNotFoundException {
         return itemDAO.search(code);
     }
