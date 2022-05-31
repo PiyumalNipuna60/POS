@@ -24,14 +24,7 @@ public class QueryDAOImpl implements QueryDAO {
             int qty = rst.getInt(5);
             BigDecimal unitPrice = rst.getBigDecimal(6);
 
-            CustomDTO customDTO = new CustomDTO();
-            customDTO.setOrderId(oid);
-            customDTO.setOrderDate(LocalDate.now());
-            customDTO.setCustomerId(customerId);
-            customDTO.setItemCode(itemCode);
-            customDTO.setQty(qty);
-            customDTO.setUnitPrice(unitPrice);
-
+            CustomDTO customDTO = new CustomDTO(oid,LocalDate.parse(date),customerId,itemCode,qty,unitPrice);
             orderRecord.add(customDTO);
         }
         return orderRecord;

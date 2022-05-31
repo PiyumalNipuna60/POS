@@ -23,6 +23,15 @@ public class CustomDTO {
     private String customerName;
     private BigDecimal orderTotal;
 
+    public CustomDTO(String oid, LocalDate date, String customerId, String itemCode, int qty, BigDecimal unitPrice) {
+        this.unitPrice = unitPrice;
+        this.orderId = oid;
+        this.itemCode = itemCode;
+        this.qty = qty;
+        this.orderDate = date;
+        this.customerId = customerId;
+    }
+
     public String getId() {
         return id;
     }
