@@ -1,7 +1,7 @@
 package controller;
 
 import bo.ItemBO;
-import bo.ItemBOImpl;
+import bo.impl.ItemBOImpl;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXTextField;
 import javafx.application.Platform;

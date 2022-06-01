@@ -1,5 +1,6 @@
-package bo;
+package bo.impl;
 
+import bo.PurchaseOderBO;
 import dao.custom.*;
 import dao.custom.impl.*;
 import db.DBConnection;
