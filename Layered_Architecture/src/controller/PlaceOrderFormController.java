@@ -1,5 +1,6 @@
 package controller;
 
+import bo.custom.BOFactory;
 import bo.custom.PurchaseOderBO;
 import bo.custom.impl.PurchaseOrderBOImpl;
 import com.jfoenix.controls.JFXButton;
@@ -41,7 +42,7 @@ import java.util.stream.Collectors;
 
 public class PlaceOrderFormController {
 
-    private final PurchaseOderBO purchaseOrderBO = new PurchaseOrderBOImpl();
+    private final PurchaseOderBO purchaseOrderBO = (PurchaseOderBO) BOFactory.getBOFactory().getBO(BOFactory.BDType.PLACE_ORDER);
     public AnchorPane root;
     public JFXButton btnPlaceOrder;
     public JFXTextField txtCustomerName;

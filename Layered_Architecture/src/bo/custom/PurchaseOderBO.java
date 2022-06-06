@@ -12,7 +12,7 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
-public interface PurchaseOderBO {
+public interface PurchaseOderBO extends SuperBO{
     public boolean PurchaseOrder(String orderId, LocalDate orderDate, String customerId, List<OrderDetailDTO> orderDetails) throws SQLException, ClassNotFoundException;
 
     public CustomerDTO searchCustomer(String id) throws SQLException, ClassNotFoundException ;
